@@ -1,0 +1,53 @@
+﻿@model List<OnlineShop.Models.Brands>
+<link rel="stylesheet" href="/Assets/css/vendor/datatables.min.css">
+
+
+<table id="MyTable" class="data-table dataTables_scrollBody nowrap hover">
+
+    <thead>
+        <tr>
+            <th class="text-muted text-small text-uppercase">Brand Name</th>
+            <th class="text-muted text-small text-uppercase">Status</th>
+            <th class="text-muted text-small text-uppercase">Created date</th>
+            <th class="text-muted text-small text-uppercase">Image</th>
+            <th class="text-muted text-small text-uppercase">Actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.BrandName</td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <span>Active</span>
+                    }
+                    else
+                    {
+                        <span>In-Active</span>
+                    }
+                </td>
+                <td>@item.CreationDate.ToString("dd MMM yyyy ")</td>
+                <td>
+                    <img src="@item.Image" alt="IMG" width="60" height="60" />
+                </td>
+                <td>
+                    <a href="#" onclick="Delete(@item.BrandId);">Delete</a>
+                    <a href="#" onclick="Edit(@item.BrandId);">Edit</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<script src="/Assets/js/vendor/datatables.min.js"></script>
+<script src="/Assets/js/vendor/mousetrap.min.js"></script>
+<script src="/Assets/js/cs/datatable.extend.js"></script>
+<script src="/Assets/js/plugins/datatable.editablerows.js"></script>
+<script>
+    $('#MyTable').DataTable();
+</script>

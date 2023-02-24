@@ -1,0 +1,20 @@
+﻿@model List<OnlineShop.Models.Price>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 border"> <b><label>Size</label></b></div>
+        <div class="col-md-4 ms-auto border"><b><label>Price</label></b> </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-md-4 border">  @item.SizeName</div>
+            <div class="col-md-4 ms-auto border">@item.Price_</div>
+        </div>
+    }
+
+
+
+</div>
+
+

@@ -1,0 +1,50 @@
+﻿@model List< OnlineShop.Models.Color>
+<link rel="stylesheet" href="/Assets/css/vendor/datatables.min.css">
+
+<table id="MyTable" class="data-table nowrap hover">
+
+    <thead>
+        <tr>
+            <th class="text-muted text-small text-uppercase">Color Name</th>
+            <th class="text-muted text-small text-uppercase">Status</th>
+            <th class="text-muted text-small text-uppercase">Created date</th>
+            <th class="text-muted text-small text-uppercase">Actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.ColorName</td>
+                <td>
+                    @if (@item.Status == 1)
+                    {
+                        <span>Active</span>
+                    }
+                    else
+                    {
+                        <span>In-Active</span>
+                    }
+                </td>
+                <td>@item.CreationDate.ToString("dd MMM yyyy ")</td>
+
+                <td>
+                    <a href="#" onclick="Delete(@item.ColorId);">Delete</a>
+                    <a href="#" onclick="Edit(@item.ColorId);">Edit</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<script src="/Assets/js/vendor/datatables.min.js"></script>
+<script src="/Assets/js/vendor/mousetrap.min.js"></script>
+@*<script src="/Assets/js/cs/datatable.extend.js"></script>
+<script src="/Assets/js/plugins/datatable.editablerows.js"></script>*@
+<script>
+    $('#MyTable').DataTable();
+</script>
+

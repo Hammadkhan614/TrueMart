@@ -1,0 +1,69 @@
+﻿@model OnlineShop.Models.Price
+@using OnlineShop.Models
+@{
+    Size s = new Size();
+    var slist = s.GetSize();
+    Product p = new Product();
+    var plist = p.GetProductAll();
+}
+<form id="FormPrice" method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(a => a.ProductId)
+    <div class="mb-3">
+        <label class="form-label">Size @Html.ValidationMessageFor(a => a.SizeId, null, new { @class = "text-danger" })  </label>
+        @Html.DropDownListFor(a => a.SizeId, new SelectList(slist, "SizeId", "SizeName"), "Select Size", new { @class = "form-control" })
+    </div>
+
+    @*<div class="mb-3">
+            <label class="form-label">Product @Html.ValidationMessageFor(a => a.Product_Id, null, new { @class = "text-danger" })  </label>
+            @Html.DropDownListFor(a => a.Product_Id, new SelectList(plist, "Productid", "ProductName"),"Select Product", new { @class = "form-control" })
+
+        </div>*@
+
+    <div class="mb-3">
+        <label class="form-label">Price @Html.ValidationMessageFor(a => a.Prices, null, new { @class = "text-danger" })</label>
+        @Html.TextBoxFor(a => a.Prices, new { @class = "form-control" })
+    </div>
+
+    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+    <button type="submit" class="btn btn-primary" id="addEditConfirmButton">Add</button>
+
+</form>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+        Save();
+
+    });
+    function Save() {
+
+        debugger;
+        $('#FormPrice').submit(function (event) {
+
+
+
+            event.preventDefault();
+            var isvalid = $('#FormPrice').valid();
+            if (!isvalid) return false
+            else {
+                var form = new FormData(document.getElementById('FormPrice'));
+                $.ajax(
+                    {
+                        type: 'Post',
+                        url: '/Price/Save',
+                        processData: false,
+                        contentType: false,
+                        data: form,
+                        success: function (res) {
+                            list();
+                        }
+
+                    })
+            }
+        })
+
+
+    }
+</script>

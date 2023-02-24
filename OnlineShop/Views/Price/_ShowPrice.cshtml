@@ -1,0 +1,32 @@
+﻿@model List<OnlineShop.Models.Price>
+<link rel="stylesheet" href="/Assets/css/vendor/datatables.min.css">
+
+<table id="MyTable" class="data-table nowrap hover">
+    <thead>
+        <tr>
+            <th class="text-muted text-small text-uppercase">Size Name</th>
+            <th class="text-muted text-small text-uppercase">Price</th>
+            <th class="text-muted text-small text-uppercase">Product Name</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>@item.SizeName</td>
+                <td>@item.Prices</td>
+                <td>@item.ProductName</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+@*<script src="/Assets/js/vendor/datatables.min.js"></script>*@
+<script src="/Assets/js/vendor/mousetrap.min.js"></script>
+@*<script src="/Assets/js/cs/datatable.extend.js"></script>
+<script src="/Assets/js/plugins/datatable.editablerows.js"></script>*@
+<script>
+    $('#MyTable').DataTable();
+</script>

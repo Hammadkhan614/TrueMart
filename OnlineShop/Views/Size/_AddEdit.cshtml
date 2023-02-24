@@ -1,0 +1,19 @@
+﻿@model OnlineShop.Models.Size
+<form id="FormSize" method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(a => a.SizeId)
+    <div class="mb-3">
+        <label class="form-label">Size Name @Html.ValidationMessageFor(A => A.SizeName, null, new { @class = "text-Danger" })</label>
+        @Html.TextBoxFor(A => A.SizeName, new { @class = "form-control" })
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Status @Html.ValidationMessageFor(A => A.Status, null, new { @class = "text-Danger" })</label>
+        @Html.DropDownListFor(A => A.Status, new List<SelectListItem>()
+{new SelectListItem(){Text="Active",Value="1"},
+     new SelectListItem(){Text="In-Active",Value="0" }
+     }, "Select Status", new { @class = "form-control" })
+
+    </div>
+    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+    <button type="submit" class="btn btn-primary">Add</button>
+
+</form>

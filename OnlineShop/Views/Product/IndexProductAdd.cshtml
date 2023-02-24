@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "IndexProductAdd";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int? ProductId = 0;
+    if (!string.IsNullOrEmpty(Request.QueryString["ProductId"])) // null na ho
+    {
+        ProductId = Convert.ToInt32(Request.QueryString["ProductId"]); // Get id from url
+    }
+}
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-title-container">
+                    <h1 class="mb-0 pb-0 display-4">Layouts</h1>
+                    <div class="col-12 col-md-5 d-flex align-items-start justify-content-end">
+                        <a class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-md-auto add-datatable" href="/Product/IndexProductList/">
+                            <i data-acorn-icon="list"></i>
+                            <span>List</span>
+                        </a>
+
+                    </div>
+                </div>
+                <div>
+
+
+                    <section class="scroll-section" id="formRow">
+                        <h2 class="small-title">Form Row</h2>
+                        <div id="FormShow">
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+<script>
+     $(document).ready(function () {
+        if ('@ProductId' > 0) {
+            GetForm('@ProductId');
+
+        }
+        else {
+            GetForm(null);
+        }
+    });
+    function GetForm(ProductId) {
+        debugger;
+        $.ajax({
+            type: 'Get',
+            url: '/Product/GetForm',
+            data: { ProductId: ProductId },
+            success: function (res) {
+                $('#FormShow').html(res);
+            }
+        })
+    } 
+   
+</script>
+

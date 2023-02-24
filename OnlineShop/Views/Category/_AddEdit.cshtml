@@ -1,0 +1,27 @@
+﻿@model OnlineShop.Models.Category
+<form id="FormCategory" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        @Html.HiddenFor(a => a.CategoryId);
+        <label class="form-label">CategoryName @Html.ValidationMessageFor(A => A.CategoryName, null, new { @class = "text-Danger" })</label>
+        @Html.TextBoxFor(A => A.CategoryName, new { @class = "form-control" })
+    </div>
+    <div class="mb-3">
+        <label class="form-label">CatogeryImage @Html.ValidationMessageFor(A => A.FileImage, null, new { @class = "text-Danger" })</label>
+        @Html.TextBoxFor(A => A.FileImage, new { @class = "form-control", Type = "file" })
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description @Html.ValidationMessageFor(A => A.Description, null, new { @class = "text-Danger" })</label>
+        @Html.TextAreaFor(A => A.Description, new { @class = "form-control" })
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Status @Html.ValidationMessageFor(A => A.Status, null, new { @class = "text-Danger" })</label>
+        @Html.DropDownListFor(A => A.Status, new List<SelectListItem>()
+ {new SelectListItem(){Text="Active",Value="1"},
+     new SelectListItem(){Text="In-Active",Value="0" }
+     }, "SelectCategory", new { @class = "form-control" });
+
+    </div>
+    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+    <button type="submit" class="btn btn-primary">Add</button>
+
+</form>

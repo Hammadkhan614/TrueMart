@@ -1,0 +1,23 @@
+﻿@model OnlineShop.Models.Color
+<form id="FormColor" method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(a => a.ColorId)
+    <div class="mb-3">
+        <label class="form-label">Color Name @Html.ValidationMessageFor(A => A.ColorName, null, new { @class = "text-Danger" })</label>
+        @Html.TextBoxFor(A => A.ColorName, new { @class = "form-control" })
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Status @Html.ValidationMessageFor(A => A.Status, null, new { @class = "text-Danger" })</label>
+        @Html.DropDownListFor(A => A.Status, new List<SelectListItem>()
+{new SelectListItem(){Text="Active",Value="1"},
+     new SelectListItem(){Text="In-Active",Value="0" }
+     }, "Select Color", new { @class = "form-control" });
+
+    </div>
+    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+    <button type="submit" class="btn btn-primary">Add</button>
+
+</form>
+
+
+
+

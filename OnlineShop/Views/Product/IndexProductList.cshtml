@@ -1,0 +1,210 @@
+﻿@model List<OnlineShop.Models.Product>
+@{
+    ViewBag.Title = "IndexProductList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="/Assets/css/vendor/datatables.min.css">
+
+
+
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="page-title-container">
+                    <div class="row">
+                        <div class="col-12 col-md-7">
+                            <h1 class="mb-0 pb-0 display-4" id="title">CATEGROY</h1>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="data-table-rows slim">
+
+                    <div class="data-table-responsive-wrapper" id="DivProductList">
+                        <table id="MyTable" class="data-table nowrap hover dataTables_scrollBody">
+                            <thead>
+                                <tr>
+                                    <th class="text-muted text-small text-uppercase">Product Name</th>
+                                    <th class="text-muted text-small text-uppercase">Discount</th>
+                                    <th class="text-muted text-small text-uppercase">Status</th>
+                                    <th class="text-muted text-small text-uppercase">Imge</th>
+                                    <th class="text-muted text-small text-uppercase">Create Date</th>
+                                    <th class="text-muted text-small text-uppercase">Is New Arrival</th>
+                                    <th class="text-muted text-small text-uppercase">Hot Deals</th>
+                                    <th class="text-muted text-small text-uppercase">Description</th>
+                                    <th class="text-muted text-small text-uppercase">Unit Name</th>
+                                    <th class="text-muted text-small text-uppercase">Color Name</th>
+                                    <th class="text-muted text-small text-uppercase">Brand Name</th>
+                                    <th class="text-muted text-small text-uppercase">Catogery Name</th>
+                                    <th class="text-muted text-small text-uppercase">Sub Catogery Name</th>
+                                    <th class="text-muted text-small text-uppercase">Add Product</th>
+                                    <th class="text-muted text-small text-uppercase">View Price</th>
+                                    <th class="text-muted text-small text-uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <td>@item.ProductName</td>
+                                        <td>@item.Discount</td>
+                                        <td>
+                                            @if (item.Status == 1)
+                                            {
+                                                <span>Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span>In-Active</span>
+                                            }
+                                        </td>
+                                        <td><img src="@item.Image" alt="Alternate Text" height="50" width="50" /></td>
+                                        <td>@item.CreatedDate.ToString("dd MMM yyyy ")</td>
+                                        <td>
+                                            @if (item.IsNewArrival == 1)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.HotDeal == 1)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        </td>
+
+                                        <td>@item.Description</td>
+                                        <td>@item.UnitName</td>
+                                        <td>@item.ColorName</td>
+                                        <td>@item.BrandName</td>
+                                        <td>@item.CategoryName</td>
+                                        <td>@item.SubCategoryName</td>
+                                        <td><button onclick="FormAddPrice('@item.ProductId');" class="btn btn-primary">Add Price</button></td>
+                                        <td><button onclick="Pricelist('@item.ProductId');" class="btn btn-primary">View Price</button></td>
+                                        <td>
+                                            <a href="/Product/IndexProductAdd?ProductId=@item.ProductId" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow edit-datatable" data-bs-delay="0" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                <i data-acorn-icon="edit"></i>
+                                            </a>
+                                            <a onclick="Delete('@item.ProductId');" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow  delete-datatable" data-bs-delay="0" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                <i data-acorn-icon="bin"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade scroll-out" id="ModelPrice" tabindex="-1" role="dialog" aria-labelledby="mdlPriceLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable long modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdlPriceLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="scroll-track-visible">
+
+                        <div id="FromPrice">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</main>
+<script src="/assets/js/vendor/datatables.min.js"></script>
+<script src="/assets/js/vendor/mousetrap.min.js"></script>
+<script src="/assets/js/cs/datatable.extend.js"></script>
+@*<script src="/assets/js/plugins/datatable.editablerows.js"></script>*@
+
+<script>
+    $('#MyTable').DataTable();
+</script>
+<script>
+
+    function FormAddPrice(ProductId) {
+        debugger;
+        $.ajax({
+            type: 'Get',
+            url: '/Price/GetFormPrice',
+            data: { ProductId: ProductId },
+            success: function (res) {
+                $('#FromPrice').html(res);
+                $('#ModelPrice').modal('show');
+            }
+        })
+    }
+
+    function Pricelist(ProductId) {
+        debugger;
+        $.ajax({
+            type: 'Get',
+            url: '/Price/ShowPrice',
+            data: { ProductId: ProductId },
+            success: function (res) {
+                $('#FromPrice').html(res);
+                $('#ModelPrice').modal('show');
+            }
+        })
+    }
+
+
+
+    function Edit(ProductId) {
+        debugger;
+        $.ajax({
+            type: 'Get',
+            url: '/Product/GetForm',
+            data: { ProductId: ProductId },
+            success: function (res) {
+                $('#FormShow').html(res);
+                window.location.href = '/Product/IndexProductAdd'
+            }
+        })
+    }
+    function Delete(ProductId) {
+        $.ajax({
+            type: 'Post',
+            url: '/Product/Delete',
+            data: {
+                ProductId: ProductId
+            },
+
+            success: function (res) {
+                window.location.href = '/Product/IndexProductList'
+                if (res == 1) {
+                    alert("Data has been deleted");
+                }
+            }
+        })
+    }
+
+</script>
+

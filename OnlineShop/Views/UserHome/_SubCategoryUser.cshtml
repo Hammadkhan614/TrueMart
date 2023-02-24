@@ -1,0 +1,29 @@
+﻿@model List<OnlineShop.Models.SubCategory>
+@foreach (var item in Model)
+{
+
+
+<div class="pro-img">
+    <a href="product.html">
+        <img width="269" height="269" class="primary-img" src="@item.Image" alt="single-product">
+    </a>
+    <a href="#" class="quick_view" data-bs-toggle="modal" data-bs-target="#myModal" data-bs-toggle="tooltip" data-bs-placement="top" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
+</div>
+<!-- Product Image End -->
+<!-- Product Content Start -->
+<div class="pro-content">
+    <div class="pro-info">
+        <h4><a href="product.html">@item.SubCategoryName</a></h4>
+        <p><span class="price">$320.45</span><del class="prev-price">$400.50</del></p>
+        <div class="label-product l_sale">30<span class="symbol-percent">%</span></div>
+    </div>
+    <div class="pro-actions">
+        <div class="actions-primary">
+            <a href="cart.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Add to Cart"> + Add To Cart</a>
+        </div>
+        <div class="actions-secondary">
+            <a href="compare.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
+            <a href="wishlist.html" data-bs-toggle="tooltip" data-bs-placement="top" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
+        </div>
+    </div>
+</div>

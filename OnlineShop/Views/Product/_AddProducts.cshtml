@@ -1,0 +1,158 @@
+﻿@model OnlineShop.Models.Product
+@using OnlineShop.Models
+@{
+    Category ct = new Category();
+    SubCategory sc = new SubCategory();
+    Color c = new Color();
+    Brands b = new Brands();
+    Unit u = new Unit();
+    Size s = new Size();
+    var Catogery = ct.GetCategories();
+    var SubCatogery = sc.GetSubCategories();
+    var Color = c.GetColor();
+    var Brand = b.GetBrand();
+    var Unit = u.GetUnit();
+    var Size = s.GetSize();
+}
+
+<form class="tooltip-end-top" method="post" enctype="multipart/form-data" id="ProductAdd">
+    <div class="card mb-5">
+        <div class="card-body">
+            @Html.HiddenFor(a => a.ProductId)
+
+            <div class="row">
+                <div class="col-6">
+                    <label class="mb-3 top-label">Product Name</label>
+
+                    @Html.TextBoxFor(a => a.ProductName, new { @class = "form-control" })
+                </div>
+                <div class="col-6">
+                    <label class="mb-3 top-label">Catogery</label>
+
+                    @Html.DropDownListFor(A => A.CategoryId, new SelectList(Catogery, "CategoryId", "CategoryName"), "Select Category", new { @class = "form-control", onchange = "GetSubCategory();" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label class="mb-3 top-label">Sub Category</label>
+
+                    @Html.DropDownListFor(a => a.SubCategoryId, new List<SelectListItem>()
+           {
+               new SelectListItem(){Text="Select Sub Category",Value=""},
+           }, "Select Sub Category ", new { @class = "form-control" })
+                </div>
+                <div class="col-6">
+                    <label class="mb-3 top-label">Color</label>
+                    @Html.DropDownListFor(A => A.ColorId, new SelectList(Color, "ColorId", "ColorName"), "Select Colors", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label class="mb-3 top-label">Brand </label>
+
+                    @Html.DropDownListFor(A => A.BrandId, new SelectList(Brand, "BrandId", "BrandName"), "Select Brand", new { @class = "form-control" })
+                </div>
+                <div class="col-6">
+                    <label class="mb-3 top-label">Unit</label>
+
+                    @Html.DropDownListFor(A => A.UnitId, new SelectList(Unit, "UnitId", "UnitName"), "Select Unit", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label class="form-label">Status @Html.ValidationMessageFor(A => A.Status, null, new { @class = "text-Danger" })</label>
+                    @Html.DropDownListFor(A => A.Status, new List<SelectListItem>()
+             {new SelectListItem(){Text="Active",Value="1"},
+                 new SelectListItem(){Text="In-Active",Value="0" }
+                 }, "Select Catogery", new { @class = "form-control" });
+                </div>
+                <div class="col-6">
+                    <label class="form-label">HotDeal @Html.ValidationMessageFor(A => A.HotDeal, null, new { @class = "text-Danger" })</label>
+                    @Html.DropDownListFor(A => A.HotDeal, new List<SelectListItem>()
+             {new SelectListItem(){Text="Yes",Value="1"},
+                 new SelectListItem(){Text="No",Value="0" }
+                 }, "Select Hot Deals", new { @class = "form-control" });
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label class="mb-3 top-label">New Arrival</label>
+
+                    @Html.DropDownListFor(a => a.IsNewArrival, new List<SelectListItem>()
+        {
+        new SelectListItem(){Text="Yes",Value="1"},
+        new SelectListItem(){Text="No",Value="0"}
+
+        }, new { @class = "form-control" })
+
+                </div>
+                <div class="col-6">
+                    <label class="mb-3 top-label">Status</label>
+                    @Html.TextBoxFor(a => a.FileImage, new { @class = "form-control", type = "file" })
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mb-3 top-label">Description</label>
+
+                @Html.TextBoxFor(a => a.Description, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="card-footer border-0 pt-0 d-flex justify-content-end align-items-center">
+            <div>
+                <button class="btn btn-icon btn-icon-end btn-primary" type="submit">
+                    <span>Save</span>
+                    <i data-acorn-icon="chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        Save();
+    });
+    function GetSubCategory() {
+        debugger;
+        var CategoryId = $('#CategoryId').val();
+        var DropDowne = $('#SubCategoryId');
+        $.ajax({
+            type: 'Get',
+            url: '/Product/GetSubCatogery',
+            data: { CategoryId: CategoryId },
+            success: function (res) {
+                DropDowne.empty();
+                for (var i = 0; i < res.length; i++) {
+                    DropDowne.append(`<option value="${res[i].SubCategoryId}">${res[i].SubCategoryName}</option>`);
+                }
+            }
+        })
+    }
+    function Save() {
+
+        debugger;
+        $('#ProductAdd').submit(function (event) {
+
+            event.preventDefault();
+
+
+
+            var form = new FormData(document.getElementById('ProductAdd'));
+            $.ajax(
+                {
+                    type: 'Post',
+                    url: '/Product/Save',
+                    processData: false,
+                    contentType: false,
+                    data: form,
+                    success: function (res) {
+
+                    }
+
+                })
+
+        })
+
+
+    }
+</script>
+<a href="#">content</a>
